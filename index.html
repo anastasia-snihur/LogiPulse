@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uk"><head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -516,7 +516,7 @@
       background:var(--ink);color:#fff;border-radius:32px;padding:64px 56px;
       position:relative;overflow:hidden;
       display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;
-      --gx:80%; --gy:100%;
+      --gx:82%; --gy:18%;
     }
     .dl::before{
       content:"";position:absolute;inset:0;
@@ -717,7 +717,7 @@
         <div class="sec-eyebrow">Можливості</div>
         <h2>Все, що потрібно вашій логістичній команді.</h2>
       </div>
-      <p class="sub">Сім робочих просторів, які закривають повний цикл — від оформлення замовлення до закриття інциденту.</p>
+      <p class="sub">Сім робочих просторів, які закривають повний цикл: від оформлення замовлення до закриття інциденту.</p>
     </div>
 
     <div class="feat-grid">
@@ -1459,13 +1459,13 @@
                   animation:toastIn .25s cubic-bezier(.22,.68,0,1.2) both">
         <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;
                      box-shadow:0 0 0 3px rgba(34,197,94,.25)"></span>
-        Завантаження розпочинається… <span class="mono" style="font-family:'Geist Mono';color:#9CA3AF;font-size:12px">LogiPulse-Setup-1.0.exe</span>
+        Завантаження розпочато…
       </div>`;
     document.body.appendChild(host);
     if (!document.getElementById('toast-kf')) {
       const s = document.createElement('style');
       s.id = 'toast-kf';
-      s.textContent = '@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}@keyframes toastOut{to{opacity:0;transform:translateX(-50%) translateY(8px)}}';
+      s.textContent = '@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes toastOut{to{opacity:0;transform:translateY(8px)}}';
       document.head.appendChild(s);
     }
     setTimeout(() => {
@@ -1517,7 +1517,7 @@
     if (!dl) return;
     if (!matchMedia('(pointer:fine)').matches) return;
 
-    let cx = 80, cy = 100, tx = 80, ty = 100, raf = 0;
+    let cx = 82, cy = 18, tx = 82, ty = 18, raf = 0;
     const SMOOTH = 0.14;
 
     function tick() {
@@ -1542,7 +1542,7 @@
       if (!raf) raf = requestAnimationFrame(tick);
     });
     dl.addEventListener('mouseleave', () => {
-      tx = 80; ty = 100;
+      tx = 82; ty = 18;
       if (!raf) raf = requestAnimationFrame(tick);
     });
   })();
