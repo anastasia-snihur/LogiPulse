@@ -597,6 +597,28 @@
     .reveal.d5{transition-delay:.38s}
     .reveal.d6{transition-delay:.46s}
 
+    /* ── Overview: map+donut top row ────────────────────── */
+    .top-widgets-row{display:grid;grid-template-columns:1.65fr 1fr;gap:12px;margin-bottom:12px}
+    .live-pill{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--success);margin-left:auto}
+    .live-dot2{width:7px;height:7px;border-radius:50%;background:var(--success);box-shadow:0 0 0 3px rgba(21,128,61,.2);animation:pulse 1.8s ease-out infinite;flex-shrink:0}
+    .map-seg-row{display:flex;align-items:center;gap:5px;padding:7px 12px;border-bottom:1.5px solid var(--border);flex-wrap:wrap}
+    .ms-btn{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid var(--border);background:var(--surface);cursor:default;white-space:nowrap}
+    .ms-btn.ms-a{background:var(--ink);color:#fff;border-color:var(--ink)}
+    .ms-dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0}
+    .map-overview-body{flex:1;position:relative;overflow:hidden;min-height:138px}
+    .lane-mini-row{display:grid;grid-template-columns:68px 1fr 42px 30px;gap:8px;align-items:center;padding:7px 13px;border-bottom:1px solid var(--border);font-size:11px}
+    .lane-mini-row:last-child{border-bottom:0}
+    .bar-track{height:5px;background:var(--bg-2);border-radius:99px;overflow:hidden}
+    .bar-fill{height:100%;background:var(--accent);border-radius:99px}
+    .map-full{position:relative;border:2px solid var(--ink);border-radius:16px;overflow:hidden;min-height:340px;background:#F3F4F6}
+    .map-page-filters{display:flex;align-items:center;gap:5px;padding:7px 12px;border-radius:10px;background:var(--surface);border:1.5px solid var(--border);margin-bottom:10px;flex-wrap:wrap}
+    .mf-btn{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:500;border:1px solid var(--border);background:var(--surface);cursor:default;white-space:nowrap}
+    .mf-btn.mf-a{background:var(--ink);color:#fff;border-color:var(--ink)}
+    .map-rail-card{position:absolute;top:10px;right:10px;width:152px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 4px 18px rgba(20,17,10,.1)}
+    .map-rail-head{padding:7px 10px;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)}
+    .map-rail-row{display:flex;align-items:center;gap:7px;padding:7px 10px;border-bottom:1px solid var(--border);font-size:11px;cursor:default}
+    .map-rail-row:last-child{border-bottom:0}
+
     /* ── Responsive ─────────────────────────────────────── */
     @media (max-width:980px){
       .hero .grid{grid-template-columns:1fr;gap:36px}
@@ -613,6 +635,7 @@
       .app{grid-template-columns:1fr}
       .sidebar{display:none}
       .panel-row{grid-template-columns:1fr}
+      .top-widgets-row{grid-template-columns:1fr}
       .nav{flex-wrap:wrap}
       .nav .links{display:none}
       .nav-burger{display:flex}
@@ -957,6 +980,10 @@
             <span class="nav-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5v14"></path></svg></span>
             Нове відправлення
           </button>
+          <button class="nav-item" data-page="map">
+            <span class="nav-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18 4.5 21V6L9 3m0 15 6-3m-6 3V3m6 12 4.5 3V6L15 3m0 12V3"></path></svg></span>
+            Мапа відправлень
+          </button>
           <button class="nav-item" data-page="dispatch">
             <span class="nav-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="18" cy="18" r="3"></circle><path d="M9 6h6c2 0 4 1 4 4"></path><path d="M15 18H9c-2 0-4-1-4-4"></path></svg></span>
             Диспетчеризація
@@ -984,8 +1011,8 @@
           <div class="screen" data-screen="overview">
             <div class="topline">
               <div>
-                <h3>Огляд</h3>
-                <div class="sub">Поточна зміна · оновлено щойно</div>
+                <h3>Огляд операцій</h3>
+                <div class="sub">Мережа автоперевезень України</div>
               </div>
               <div class="right">
                 <div class="pill-search">
@@ -995,25 +1022,59 @@
               </div>
             </div>
             <div class="kpi-row">
-              <div class="kpi-tile"><div class="head">Активні</div><div class="body"><div class="v">247</div><div class="d">▲ +12 за день</div></div></div>
-              <div class="kpi-tile"><div class="head">Вчасні</div><div class="body"><div class="v">97,4%</div><div class="d">▲ +0,4 п.п.</div></div></div>
-              <div class="kpi-tile"><div class="head">Інциденти</div><div class="body"><div class="v">8</div><div class="d down">▼ −2 за день</div></div></div>
+              <div class="kpi-tile"><div class="head">Активні відправлення</div><div class="body"><div class="v">247</div><div class="d">▲ +12 порівняно з учора</div></div></div>
+              <div class="kpi-tile"><div class="head">Вчасні доставки</div><div class="body"><div class="v">97,4%</div><div class="d">▲ +0,4 п.п. за тиждень</div></div></div>
+              <div class="kpi-tile"><div class="head">Відкриті інциденти</div><div class="body"><div class="v">8</div><div class="d down">▼ −2 порівняно з учора</div></div></div>
               <div class="kpi-tile"><div class="head">У дорозі</div><div class="body"><div class="v">42</div><div class="d">із 247 активних</div></div></div>
             </div>
-            <div class="panel-row">
-              <div class="panel">
-                <div class="panel-head"><h4>Найближчі рейси</h4><span class="sub">за часом ETA</span><span class="right">6 із 247</span></div>
-                <table class="mini">
-                  <thead><tr><th>№</th><th>Маршрут</th><th>Водій</th><th>Статус</th><th style="text-align:right">ETA</th></tr></thead>
-                  <tbody>
-                    <tr><td class="id">SHP-4027</td><td>КИЇ → ХРК</td><td>М. Куліш</td><td><span class="badge info"><span class="dot"></span>У дорозі</span></td><td style="text-align:right" class="mono">14:20</td></tr>
-                    <tr><td class="id">SHP-4031</td><td>ЛЬВ → ЗПР</td><td>О. Гнатюк</td><td><span class="badge info"><span class="dot"></span>У дорозі</span></td><td style="text-align:right" class="mono">15:45</td></tr>
-                    <tr><td class="id">SHP-4044</td><td>ОДС → ТРН</td><td>В. Лагода</td><td><span class="badge warning"><span class="dot"></span>Затримка</span></td><td style="text-align:right" class="mono">16:10</td></tr>
-                    <tr><td class="id">SHP-4052</td><td>ДНП → РВН</td><td>І. Демчук</td><td><span class="badge neutral"><span class="dot"></span>Бронь</span></td><td style="text-align:right" class="mono">17:00</td></tr>
-                    <tr><td class="id">SHP-4061</td><td>ЧРН → ЧРК</td><td>Р. Семен</td><td><span class="badge success"><span class="dot"></span>Доставлено</span></td><td style="text-align:right" class="mono">17:30</td></tr>
-                    <tr><td class="id">SHP-4070</td><td>КИЇ → ВНК</td><td>П. Шевчук</td><td><span class="badge danger"><span class="dot"></span>Інцидент</span></td><td style="text-align:right" class="mono">18:05</td></tr>
-                  </tbody>
-                </table>
+            <!-- Ряд 1: Карта + Розподіл статусів -->
+            <div class="top-widgets-row">
+              <div class="panel" style="display:flex;flex-direction:column;padding:0;overflow:hidden">
+                <div class="panel-head" style="padding:10px 14px">
+                  <h4>Мапа активних відправлень</h4>
+                  <span class="live-pill"><span class="live-dot2"></span>Наживо</span>
+                  <button style="margin-left:8px;display:inline-flex;align-items:center;gap:5px;font-size:11px;height:26px;padding:0 10px;border-radius:7px;border:1px solid var(--border);background:transparent;cursor:default;font-family:var(--font-sans)">
+                    <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M9 2h5v5M14 2L9 7M7 14H2v-5M2 14l5-5"/></svg>
+                    Розгорнути
+                  </button>
+                </div>
+                <div class="map-seg-row">
+                  <span class="ms-btn ms-a">УСІ <span style="font-family:var(--font-mono);font-size:10px;opacity:.65;margin-left:3px">247</span></span>
+                  <span class="ms-btn"><span class="ms-dot" style="background:#60a5fa"></span>У дорозі <span style="font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-left:2px">42</span></span>
+                  <span class="ms-btn"><span class="ms-dot" style="background:#f87171"></span>Інцидент <span style="font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-left:2px">8</span></span>
+                  <span class="ms-btn"><span class="ms-dot" style="background:#4ade80"></span>Доставлено <span style="font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-left:2px">175</span></span>
+                </div>
+                <div class="map-overview-body">
+                  <svg viewBox="0 0 360 138" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style="display:block" aria-hidden="true">
+                    <rect width="360" height="138" fill="#F3F4F6"/>
+                    <path d="M 43 47 Q 110 42 175 36 Q 240 34 290 44" fill="none" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M 175 36 L 179 100" fill="none" stroke="#D1D5DB" stroke-width="1.4" stroke-dasharray="5 4" opacity=".4"/>
+                    <path d="M 175 36 Q 220 50 266 68" fill="none" stroke="#D1D5DB" stroke-width="1.4" stroke-linecap="round" opacity=".5"/>
+                    <path d="M 175 36 Q 228 38 285 44" fill="none" stroke="#1D4ED8" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M 43 47 Q 130 42 175 36 Q 222 44 266 68" fill="none" stroke="#1D4ED8" stroke-width="1.5" stroke-linecap="round" opacity=".4" stroke-dasharray="4 4"/>
+                    <!-- Kyiv -->
+                    <circle cx="175" cy="36" r="6" fill="#1D4ED8" stroke="#fff" stroke-width="1.5"/>
+                    <circle cx="175" cy="36" r="6" fill="#1D4ED8" opacity=".2"><animate attributeName="r" values="6;18;6" dur="2.2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".2;0;.2" dur="2.2s" repeatCount="indefinite"/></circle>
+                    <!-- Kharkiv -->
+                    <circle cx="285" cy="44" r="5" fill="#1D4ED8" stroke="#fff" stroke-width="1.5"/>
+                    <!-- Lviv -->
+                    <circle cx="43" cy="47" r="4" fill="#6B7280" stroke="#fff" stroke-width="1.5"/>
+                    <!-- Odessa -->
+                    <circle cx="179" cy="100" r="4" fill="#6B7280" stroke="#fff" stroke-width="1.5"/>
+                    <!-- Dnipro -->
+                    <circle cx="266" cy="68" r="4.5" fill="#1D4ED8" stroke="#fff" stroke-width="1.5"/>
+                    <circle cx="266" cy="68" r="4.5" fill="#1D4ED8" opacity=".18"><animate attributeName="r" values="4.5;13;4.5" dur="2.8s" begin=".9s" repeatCount="indefinite"/><animate attributeName="opacity" values=".18;0;.18" dur="2.8s" begin=".9s" repeatCount="indefinite"/></circle>
+                    <!-- Incident pulse (Lviv) -->
+                    <circle cx="43" cy="47" r="5" fill="none" stroke="#f87171" stroke-width="2"><animate attributeName="r" values="5;14;5" dur="2s" begin="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="2s" begin="1.4s" repeatCount="indefinite"/></circle>
+                    <!-- Moving truck -->
+                    <circle r="3.5" fill="#fff" stroke="#1D4ED8" stroke-width="1.5"><animateMotion path="M 175 36 Q 228 38 285 44" dur="4s" repeatCount="indefinite"/></circle>
+                    <text x="170" y="52" font-family="Geist Mono,monospace" font-size="7.5" fill="#1D4ED8" font-weight="600">КИЇ</text>
+                    <text x="280" y="59" font-family="Geist Mono,monospace" font-size="7.5" fill="#1D4ED8" font-weight="600">ХРК</text>
+                    <text x="35" y="63" font-family="Geist Mono,monospace" font-size="7" fill="#6B7280">ЛЬВ</text>
+                    <text x="261" y="83" font-family="Geist Mono,monospace" font-size="7" fill="#1D4ED8">ДНП</text>
+                    <text x="173" y="115" font-family="Geist Mono,monospace" font-size="7" fill="#6B7280">ОДС</text>
+                  </svg>
+                </div>
               </div>
               <div class="panel">
                 <div class="panel-head"><h4>Розподіл статусів</h4><span class="sub">усі активні</span></div>
@@ -1031,6 +1092,34 @@
                   <div class="it"><span class="sw" style="background:#9CA3AF"></span>Бронь<span class="v">22</span></div>
                   <div class="it"><span class="sw" style="background:#f87171"></span>Інциденти<span class="v">8</span></div>
                   <div class="it"><span class="sw" style="background:#4ade80"></span>Доставлено<span class="v">28</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ряд 2: Остання активність + Топ маршрутів -->
+            <div class="panel-row" style="margin-top:12px">
+              <div class="panel">
+                <div class="panel-head"><h4>Остання активність</h4><span class="sub">за ETA ↑</span><span class="right">6 із 247</span></div>
+                <table class="mini">
+                  <thead><tr><th>№</th><th>Маршрут</th><th>Клієнт</th><th>Статус</th><th style="text-align:right">ETA</th></tr></thead>
+                  <tbody>
+                    <tr><td class="id">SHP-4027</td><td>КИЇ → ХРК</td><td>«Метро Кеш»</td><td><span class="badge info"><span class="dot"></span>У дорозі</span></td><td style="text-align:right" class="mono">14:20</td></tr>
+                    <tr><td class="id">SHP-4031</td><td>ЛЬВ → ЗПР</td><td>Nova Poshta</td><td><span class="badge info"><span class="dot"></span>У дорозі</span></td><td style="text-align:right" class="mono">15:45</td></tr>
+                    <tr><td class="id">SHP-4044</td><td>ОДС → ТРН</td><td>АТБ-Маркет</td><td><span class="badge warning"><span class="dot"></span>Затримка</span></td><td style="text-align:right" class="mono">16:10</td></tr>
+                    <tr><td class="id">SHP-4070</td><td>КИЇ → ВНК</td><td>«Розетка»</td><td><span class="badge danger"><span class="dot"></span>Інцидент</span></td><td style="text-align:right" class="mono">18:05</td></tr>
+                    <tr><td class="id">SHP-4082</td><td>КИЇ → ЛЬВ</td><td>Ashan</td><td><span class="badge info"><span class="dot"></span>У дорозі</span></td><td style="text-align:right" class="mono">19:20</td></tr>
+                    <tr><td class="id">SHP-4090</td><td>ОДС → КИЇ</td><td>Comfy</td><td><span class="badge neutral"><span class="dot"></span>Бронь</span></td><td style="text-align:right" class="mono">21:40</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><h4>Топ-5 маршрутів</h4><span class="sub">за обсягом · місяць</span></div>
+                <div style="padding:4px 0">
+                  <div class="lane-mini-row"><span class="mono" style="font-size:10.5px">КИЇ→ХРК</span><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div><span class="mono" style="color:var(--muted);font-size:10.5px;text-align:right">38</span><span style="color:var(--success);font-size:10.5px;font-weight:500;text-align:right">97%</span></div>
+                  <div class="lane-mini-row"><span class="mono" style="font-size:10.5px">ЛЬВ→ЗПР</span><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div><span class="mono" style="color:var(--muted);font-size:10.5px;text-align:right">26</span><span style="color:var(--success);font-size:10.5px;font-weight:500;text-align:right">99%</span></div>
+                  <div class="lane-mini-row"><span class="mono" style="font-size:10.5px">ОДС→ТРН</span><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div><span class="mono" style="color:var(--muted);font-size:10.5px;text-align:right">22</span><span style="color:var(--warning);font-size:10.5px;font-weight:500;text-align:right">92%</span></div>
+                  <div class="lane-mini-row"><span class="mono" style="font-size:10.5px">ДНП→РВН</span><div class="bar-track"><div class="bar-fill" style="width:47%"></div></div><span class="mono" style="color:var(--muted);font-size:10.5px;text-align:right">19</span><span style="color:var(--success);font-size:10.5px;font-weight:500;text-align:right">95%</span></div>
+                  <div class="lane-mini-row"><span class="mono" style="font-size:10.5px">ЧРН→ЧРК</span><div class="bar-track"><div class="bar-fill" style="width:35%"></div></div><span class="mono" style="color:var(--muted);font-size:10.5px;text-align:right">14</span><span style="color:var(--warning);font-size:10.5px;font-weight:500;text-align:right">89%</span></div>
                 </div>
               </div>
             </div>
@@ -1150,8 +1239,8 @@
                   <!-- water -->
                   <path d="M0 148 Q80 138 160 144 T320 140 T480 146 T600 138 L600 170 L0 170Z" fill="#b3d1ef" opacity=".7"></path>
                   <!-- secondary roads -->
-                  <path d="M80 0 Q110 60 230 98 T450 168" fill="none" stroke="#c8c0b4" stroke-width="2" stroke-linecap="round"></path>
-                  <path d="M310 0 L322 170" fill="none" stroke="#c8c0b4" stroke-width="1.8" stroke-dasharray="6 5"></path>
+                  <path d="M80 0 Q110 60 230 98 T450 168" fill="none" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"></path>
+                  <path d="M310 0 L322 170" fill="none" stroke="#D1D5DB" stroke-width="1.8" stroke-dasharray="6 5"></path>
                   <!-- main highway — same bezier as active route, extended at both ends -->
                   <path d="M0 109 C20 109 40 109 60 108 C150 108 190 74 280 76 S410 106 470 72 C520 56 565 52 600 48" fill="none" stroke="#b8b0a4" stroke-width="7" stroke-linecap="round"></path>
                   <path d="M0 109 C20 109 40 109 60 108 C150 108 190 74 280 76 S410 106 470 72 C520 56 565 52 600 48" fill="none" stroke="#dcd8d0" stroke-width="5" stroke-linecap="round"></path>
@@ -1178,6 +1267,95 @@
               <div style="flex:1"></div>
               <span style="font-size:11.5px;color:var(--muted);align-self:center">Крок 2 з 4</span>
               <button class="btn-mini prim">Далі →</button>
+            </div>
+          </div>
+
+          <!-- ===== МАПА ВІДПРАВЛЕНЬ ===== -->
+          <div class="screen" data-screen="map" hidden="">
+            <div class="topline">
+              <div>
+                <h3>Мапа відправлень</h3>
+                <div class="sub">42 активних · у реальному часі</div>
+              </div>
+              <div class="right">
+                <div class="pill-search">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+                  <span>Пошук…</span>
+                </div>
+              </div>
+            </div>
+            <div class="map-page-filters">
+              <span class="mf-btn mf-a">УСІ <span style="font-family:var(--font-mono);font-size:10px;opacity:.65;margin-left:3px">247</span></span>
+              <span class="mf-btn"><span class="ms-dot" style="background:#60a5fa;margin-right:2px"></span>У дорозі <span style="font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-left:2px">42</span></span>
+              <span class="mf-btn"><span class="ms-dot" style="background:#f87171;margin-right:2px"></span>Інцидент <span style="font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-left:2px">8</span></span>
+              <span class="mf-btn"><span class="ms-dot" style="background:#4ade80;margin-right:2px"></span>Доставлено <span style="font-family:var(--font-mono);font-size:10px;color:var(--muted);margin-left:2px">175</span></span>
+              <span style="flex:1"></span>
+              <span class="mf-btn">Тип ▾</span>
+              <span class="mf-btn">Клієнт ▾</span>
+              <span class="live-pill" style="margin-left:0"><span class="live-dot2"></span>Наживо</span>
+            </div>
+            <div class="map-full">
+              <svg viewBox="0 0 560 340" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style="display:block" aria-hidden="true">
+                <rect width="560" height="340" fill="#F3F4F6"/>
+                <!-- Roads -->
+                <path d="M 68 108 Q 170 82 272 81 Q 380 84 451 100" fill="none" stroke="#D1D5DB" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 272 81 L 278 234" fill="none" stroke="#D1D5DB" stroke-width="2" stroke-dasharray="7 5" opacity=".4"/>
+                <path d="M 272 81 Q 340 118 413 157" fill="none" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+                <!-- Active routes -->
+                <path d="M 272 81 Q 355 88 451 100" fill="none" stroke="#1D4ED8" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 68 108 Q 170 94 272 81 Q 340 90 413 157" fill="none" stroke="#1D4ED8" stroke-width="2" stroke-linecap="round" opacity=".45" stroke-dasharray="6 5"/>
+                <path d="M 272 81 L 278 234" fill="none" stroke="#1D4ED8" stroke-width="2" stroke-linecap="round" opacity=".35" stroke-dasharray="6 5"/>
+                <!-- Kyiv -->
+                <circle cx="272" cy="81" r="8" fill="#1D4ED8" stroke="#fff" stroke-width="2"/>
+                <circle cx="272" cy="81" r="8" fill="#1D4ED8" opacity=".18"><animate attributeName="r" values="8;22;8" dur="2.2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".18;0;.18" dur="2.2s" repeatCount="indefinite"/></circle>
+                <!-- Kharkiv -->
+                <circle cx="451" cy="100" r="7" fill="#1D4ED8" stroke="#fff" stroke-width="2"/>
+                <!-- Lviv -->
+                <circle cx="68" cy="108" r="6" fill="#6B7280" stroke="#fff" stroke-width="2"/>
+                <!-- Odessa -->
+                <circle cx="278" cy="234" r="6" fill="#6B7280" stroke="#fff" stroke-width="2"/>
+                <!-- Dnipro -->
+                <circle cx="413" cy="157" r="7" fill="#1D4ED8" stroke="#fff" stroke-width="2"/>
+                <circle cx="413" cy="157" r="7" fill="#1D4ED8" opacity=".16"><animate attributeName="r" values="7;20;7" dur="2.8s" begin=".9s" repeatCount="indefinite"/><animate attributeName="opacity" values=".16;0;.16" dur="2.8s" begin=".9s" repeatCount="indefinite"/></circle>
+                <!-- Zaporizhzhia -->
+                <circle cx="416" cy="184" r="6" fill="#1D4ED8" stroke="#fff" stroke-width="1.5"/>
+                <!-- Mykolaiv -->
+                <circle cx="319" cy="219" r="5" fill="#6B7280" stroke="#fff" stroke-width="1.5"/>
+                <!-- Chernihiv -->
+                <circle cx="297" cy="42" r="5" fill="#6B7280" stroke="#fff" stroke-width="1.5"/>
+                <!-- Poltava -->
+                <circle cx="397" cy="115" r="5" fill="#1D4ED8" stroke="#fff" stroke-width="1.5"/>
+                <!-- Incident pulse (Lviv) -->
+                <circle cx="68" cy="108" r="7" fill="none" stroke="#f87171" stroke-width="2.5"><animate attributeName="r" values="7;18;7" dur="2s" begin="1.4s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="2s" begin="1.4s" repeatCount="indefinite"/></circle>
+                <!-- Moving trucks -->
+                <circle r="5" fill="#fff" stroke="#1D4ED8" stroke-width="2"><animateMotion path="M 272 81 Q 355 88 451 100" dur="5s" repeatCount="indefinite"/></circle>
+                <circle r="4" fill="#fff" stroke="#1D4ED8" stroke-width="1.5" opacity=".7"><animateMotion path="M 68 108 Q 170 94 272 81" dur="7s" begin="2s" repeatCount="indefinite"/></circle>
+                <!-- Labels -->
+                <text x="266" y="102" font-family="Geist Mono,monospace" font-size="11" fill="#1D4ED8" font-weight="600">КИЇ</text>
+                <text x="445" y="120" font-family="Geist Mono,monospace" font-size="11" fill="#1D4ED8" font-weight="600">ХРК</text>
+                <text x="50" y="128" font-family="Geist Mono,monospace" font-size="10" fill="#6B7280">ЛЬВ</text>
+                <text x="272" y="254" font-family="Geist Mono,monospace" font-size="10" fill="#6B7280">ОДС</text>
+                <text x="407" y="176" font-family="Geist Mono,monospace" font-size="10" fill="#1D4ED8">ДНП</text>
+                <text x="408" y="202" font-family="Geist Mono,monospace" font-size="10" fill="#1D4ED8">ЗПР</text>
+                <text x="291" y="32" font-family="Geist Mono,monospace" font-size="10" fill="#6B7280">ЧРН</text>
+                <text x="389" y="108" font-family="Geist Mono,monospace" font-size="10" fill="#1D4ED8">ПЛТ</text>
+              </svg>
+              <!-- Active shipments rail -->
+              <div class="map-rail-card">
+                <div class="map-rail-head">Активні</div>
+                <div class="map-rail-row"><span class="badge info" style="font-size:10px"><span class="dot"></span>У дорозі</span><span style="font-family:var(--font-mono);font-size:10.5px;color:var(--ink-2);margin-left:auto">SHP-4027</span></div>
+                <div class="map-rail-row"><span class="badge info" style="font-size:10px"><span class="dot"></span>У дорозі</span><span style="font-family:var(--font-mono);font-size:10.5px;color:var(--ink-2);margin-left:auto">SHP-4031</span></div>
+                <div class="map-rail-row"><span class="badge warning" style="font-size:10px"><span class="dot"></span>Затримка</span><span style="font-family:var(--font-mono);font-size:10.5px;color:var(--ink-2);margin-left:auto">SHP-4044</span></div>
+                <div class="map-rail-row"><span class="badge danger" style="font-size:10px"><span class="dot"></span>Інцидент</span><span style="font-family:var(--font-mono);font-size:10.5px;color:var(--ink-2);margin-left:auto">SHP-4070</span></div>
+                <div class="map-rail-row" style="color:var(--muted);font-size:10.5px;justify-content:center">+38 активних…</div>
+              </div>
+              <!-- Legend -->
+              <div style="position:absolute;bottom:10px;left:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:8px 12px;font-size:11px;display:flex;flex-direction:column;gap:5px">
+                <div style="display:flex;align-items:center;gap:7px"><span style="width:8px;height:8px;border-radius:50%;background:#1D4ED8;flex-shrink:0"></span>У дорозі</div>
+                <div style="display:flex;align-items:center;gap:7px"><span style="width:8px;height:8px;border-radius:50%;background:#f87171;flex-shrink:0"></span>Інцидент</div>
+                <div style="display:flex;align-items:center;gap:7px"><span style="width:8px;height:8px;border-radius:50%;background:#4ade80;flex-shrink:0"></span>Доставлено</div>
+                <div style="display:flex;align-items:center;gap:7px"><span style="width:8px;height:8px;border-radius:50%;background:#9CA3AF;flex-shrink:0"></span>Місто призначення</div>
+              </div>
             </div>
           </div>
 
